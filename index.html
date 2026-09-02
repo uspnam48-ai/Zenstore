@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zen Store</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#070707;color:#fff;font-family:Arial,sans-serif}
+header{position:sticky;top:0;background:#0b0b0bee;border-bottom:1px solid #292929;backdrop-filter:blur(12px);z-index:5}
+nav{max-width:1050px;margin:auto;padding:17px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:20px;font-weight:900;letter-spacing:1px}.logo b{color:#ffd21c}
+nav a{color:#ddd;text-decoration:none;margin-left:18px;font-size:14px}
+nav a:hover{color:#ffd21c}
+.hero{max-width:1050px;margin:auto;padding:75px 20px 50px;text-align:center}
+.tag{display:inline-block;border:1px solid #6b5900;background:#171300;color:#ffd21c;padding:7px 12px;border-radius:99px;font-size:12px;font-weight:bold}
+h1{font-size:clamp(45px,8vw,78px);line-height:.95;margin:20px 0 15px;letter-spacing:-3px}
+h1 span{color:#ffd21c}.hero p{color:#aaa;line-height:1.7;max-width:650px;margin:auto}
+.btn{display:inline-block;background:#ffd21c;color:#111;text-decoration:none;font-weight:900;padding:14px 20px;border-radius:12px;margin-top:25px}
+.wrap{max-width:1050px;margin:auto;padding:20px}
+h2{margin:30px 0 16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card{background:#111;border:1px solid #292929;border-radius:18px;padding:20px;transition:.2s}
+.card:hover{transform:translateY(-3px);border-color:#806900}
+.card h3{margin:0 0 9px}.desc{color:#999;font-size:13px;min-height:38px}.price{color:#ffd21c;font-size:22px;font-weight:900;margin:15px 0}
+.buy{width:100%;border:0;border-radius:10px;padding:11px;background:#ffd21c;color:#111;font-weight:900;cursor:pointer}
+.topup{margin:40px 0;background:linear-gradient(145deg,#151515,#0d0d0d);border:1px solid #393000;border-radius:20px;padding:25px}
+.topup p{color:#aaa}.box{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input,select{width:100%;padding:13px;border-radius:10px;border:1px solid #333;background:#090909;color:#fff}
+.notice{font-size:12px;color:#888;margin-top:13px;line-height:1.6}
+footer{text-align:center;color:#777;border-top:1px solid #222;padding:30px 20px;margin-top:45px}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:20;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}.modalbox{background:#111;border:1px solid #444;border-radius:18px;padding:25px;max-width:420px;width:100%}
+.close{float:right;background:none;border:0;color:#aaa;font-size:22px;cursor:pointer}
+@media(max-width:600px){.navlinks{display:none}.box{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><nav><div class="logo">ZEN <b>STORE</b></div><div class="navlinks"><a href="#products">Sản phẩm</a><a href="#support">Hỗ trợ</a></div></nav></header>
+
+<section class="hero">
+<span class="tag">DIGITAL GAMING STORE</span>
+<h1><span>ZEN</span><br>STORE</h1>
+<p>Website bán sản phẩm kỹ thuật số với giao diện Black × Gold. Chọn sản phẩm, xem giá và gửi yêu cầu thanh toán trực tiếp.</p>
+<a class="btn" href="#products">XEM SẢN PHẨM</a>
+</section>
+
+<main class="wrap">
+<section id="products">
+<h2>Sản phẩm</h2>
+<div class="grid">
+<div class="card"><h3>Menu ẩn</h3><div class="desc">Gói kỹ thuật số</div><div class="price">150k / VV</div><button class="buy" onclick="order('Menu ẩn','150k / VV')">Mua ngay</button></div>
+<div class="card"><h3>Key PRX</h3><div class="desc">Lựa chọn thời hạn</div><div class="price">30k / 1 ngày</div><button class="buy" onclick="order('Key PRX','30k / 1 ngày')">Mua ngay</button></div>
+<div class="card"><h3>Key PRX</h3><div class="desc">Lựa chọn thời hạn</div><div class="price">60k / 1 tuần</div><button class="buy" onclick="order('Key PRX','60k / 1 tuần')">Mua ngay</button></div>
+<div class="card"><h3>Key PRX</h3><div class="desc">Lựa chọn thời hạn</div><div class="price">100k / 1 tháng</div><button class="buy" onclick="order('Key PRX','100k / 1 tháng')">Mua ngay</button></div>
+<div class="card"><h3>Key PRX</h3><div class="desc">Lựa chọn thời hạn</div><div class="price">250k / VV</div><button class="buy" onclick="order('Key PRX','250k / VV')">Mua ngay</button></div>
+<div class="card"><h3>App ADR</h3><div class="desc">Gói kỹ thuật số</div><div class="price">100k / 1 tuần</div><button class="buy" onclick="order('App ADR','100k / 1 tuần')">Mua ngay</button></div>
+<div class="card"><h3>App ADR</h3><div class="desc">Gói kỹ thuật số</div><div class="price">200k / 1 tháng</div><button class="buy" onclick="order('App ADR','200k / 1 tháng')">Mua ngay</button></div>
+<div class="card"><h3>Aim iOS</h3><div class="desc">Gói kỹ thuật số</div><div class="price">150k / 1 OB</div><button class="buy" onclick="order('Aim iOS','150k / 1 OB')">Mua ngay</button></div>
+<div class="card"><h3>Aim iOS</h3><div class="desc">Gói kỹ thuật số</div><div class="price">300k / VV</div><button class="buy" onclick="order('Aim iOS','300k / VV')">Mua ngay</button></div>
+<div class="card"><h3>Aim Body ADR</h3><div class="desc">Gói kỹ thuật số</div><div class="price">350k / VV</div><button class="buy" onclick="order('Aim Body ADR','350k / VV')">Mua ngay</button></div>
+</div>
+</section>
+
+
+
+<section id="support"><h2>Hỗ trợ</h2><p style="color:#aaa">Liên hệ quản trị viên để xác nhận đơn hàng và thanh toán.</p></section>
+</main>
+
+<footer>© 2026 Zen Store — Black × Gold</footer>
+
+<div class="modal" id="modal"><div class="modalbox"><button class="close" onclick="closeM()">×</button><h2 id="mt"></h2><p id="md" style="color:#aaa"></p><p style="color:#ffd21c;font-weight:bold">Vui lòng liên hệ quản trị viên để hoàn tất đơn.</p><button class="btn" onclick="closeM()">Đóng</button></div></div>
+
+<script>
+function order(n,p){
+  const zaloUrl = 'https://zalo.me/84355417385';
+  window.location.href = zaloUrl;
+}
+function topup(){let a=document.getElementById('amount').value;if(!a||a<=0){alert('Nhập số tiền hợp lệ');return}alert('Đã tạo yêu cầu nạp '+Number(a).toLocaleString('vi-VN')+'đ. , chưa kết nối thanh toán thật.')}
+function closeM(){document.getElementById('modal').classList.remove('show')}
+</script>
+</body>
+</html>
