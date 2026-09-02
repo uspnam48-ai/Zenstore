@@ -1,64 +1,67 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZEN STORE - ZALOPAY</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZEN STORE - AIM SHOP</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont}
-body{background:#0b0b0e;color:#fff}
-header{position:sticky;top:0;background:#0b0b0e;padding:16px;text-align:center;border-bottom:1px solid #222;font-weight:900}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0a0a0a;color:#fff}
+header{background:#111;border-bottom:2px solid #ffcc00;padding:12px;text-align:center;font-weight:900;color:#ffcc00;position:sticky;top:0;z-index:10}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
-.card{background:#15151a;border:1px solid #26262f;border-radius:18px;padding:10px}
-.card img{width:100%;border-radius:12px}
-.btn{width:100%;padding:12px;border:none;border-radius:99px;background:#ffd21c;color:#000;font-weight:800;margin-top:8px}
-.cart{position:fixed;bottom:0;left:0;right:0;background:#fff;color:#000;border-radius:28px 28px 0 0;padding:20px;transform:translateY(110%);transition:.35s;max-height:92vh;overflow:auto;z-index:99}
-.cart.open{transform:translateY(0)} 
-.bg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;z-index:98} .bg.open{display:block}
-.row{display:flex;justify-content:space-between;background:#f2f2f5;padding:12px;border-radius:12px;margin:8px 0}
+.card{background:#151515;border:1px solid #333;border-radius:14px;padding:10px;text-align:center}
+.card img{width:100%;border-radius:10px;height:110px;object-fit:cover}
+.price{color:#ffcc00;font-weight:900;margin:6px 0}
+.btn{width:100%;background:#ffcc00;color:#000;border:none;padding:10px;border-radius:99px;font-weight:900}
+.cart{position:fixed;bottom:0;left:0;right:0;background:#fff;color:#000;border-radius:22px 22px 0 0;padding:16px;transform:translateY(110%);transition:.3s;z-index:99;max-height:90vh;overflow:auto}
+.cart.open{transform:translateY(0)}
+.bg{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;z-index:98}.bg.open{display:block}
 </style>
 </head>
 <body>
-<header>ZEN STORE 💙 ZALOPAY 0355417385</header>
+<header>ZEN STORE 💙 DIGITAL GAMING STORE<br><small style="color:#fff">ZALOPAY: 0355417385 - HOÀNG BẢO NAM</small></header>
+
 <div class="grid" id="grid"></div>
+
 <div class="bg" id="bg" onclick="toggle()"></div>
 <div class="cart" id="cart">
-<h3>Giỏ hàng</h3>
-<div id="items" style="margin:10px 0">Trống</div>
-<b>Tổng: <span id="total">0</span>đ</b>
-<input id="name" placeholder="Tên của bạn" style="width:100%;padding:12px;border-radius:12px;border:1px solid #ddd;margin-top:10px">
-<input id="phone" placeholder="SĐT nhận hàng" style="width:100%;padding:12px;border-radius:12px;border:1px solid #ddd;margin-top:8px">
-<button class="btn" style="background:#0068FF;color:#fff" onclick="pay()">ĐẶT HÀNG - THANH TOÁN ZALOPAY</button>
+<h3>🛒 Đơn hàng của bạn</h3>
+<div id="items">Trống</div>
+<h3 style="margin-top:10px">Tổng: <span id="total">0</span>đ</h3>
+<input id="name" placeholder="Tên game / UID" style="width:100%;padding:11px;border-radius:10px;border:1px solid #ccc;margin-top:8px">
+<input id="phone" placeholder="SĐT Zalo của bạn" style="width:100%;padding:11px;border-radius:10px;border:1px solid #ccc;margin-top:6px">
+<button class="btn" style="margin-top:10px;background:#0068FF;color:#fff" onclick="pay()">TẠO MÃ THANH TOÁN TỰ ĐỘNG</button>
 <div id="payBox"></div>
 </div>
-<button onclick="toggle()" style="position:fixed;bottom:22px;right:22px;width:62px;height:62px;border-radius:50%;background:#0068FF;color:#fff;border:none;font-size:26px;z-index:97">🛒</button>
+
+<button onclick="toggle()" style="position:fixed;bottom:18px;right:18px;width:62px;height:62px;border-radius:50%;background:#ffcc00;color:#000;border:none;font-weight:900;font-size:26px;z-index:97">🛒</button>
+
 <script>
-const prods=[{id:1,n:"Áo Thun Zen",p:149000,img:"https://picsum.photos/seed/zen1/400"},{id:2,n:"Quần Jeans",p:299000,img:"https://picsum.photos/seed/zen2/400"},{id:3,n:"Giày Sneaker",p:499000,img:"https://picsum.photos/seed/zen3/400"},{id:4,n:"Mũ Zen",p:99000,img:"https://picsum.photos/seed/zen4/400"}];
-let cart=[]; 
-const g=document.getElementById('grid');
-prods.forEach(o=>{g.innerHTML+=`<div class=card><img src="${o.img}"><div style="margin:8px 0;font-weight:600">${o.n}</div><div style="font-weight:800;color:#ffd21c">${o.p.toLocaleString()}đ</div><button class=btn onclick="add(${o.id})">Thêm</button></div>`});
-function add(id){let f=cart.find(x=>x.id==id);if(f)f.q++;else{let p=prods.find(x=>x.id==id);cart.push({...p,q:1})}upd()}
-function upd(){let h="";let t=0;cart.forEach(x=>{t+=x.p*x.q;h+=`<div style="display:flex;justify-content:space-between;margin:6px 0"><span>${x.n} x${x.q}</span><span>${(x.p*x.q).toLocaleString()}đ</span></div>`});document.getElementById('items').innerHTML=h||"Trống";document.getElementById('total').innerText=t.toLocaleString()}
+const products=[
+{id:1,n:"MENU ẨN VIP",p:150000,img:"https://picsum.photos/seed/aim1/400"},
+{id:2,n:"KEY PRX - 1 NGÀY",p:30000,img:"https://picsum.photos/seed/aim2/400"},
+{id:3,n:"KEY PRX - 7 NGÀY",p:150000,img:"https://picsum.photos/seed/aim3/400"},
+{id:4,n:"KEY PRX - 30 NGÀY",p:400000,img:"https://picsum.photos/seed/aim4/400"},
+{id:5,n:"AIMBOT + ANTIBAN",p:250000,img:"https://picsum.photos/seed/aim5/400"},
+{id:6,n:"COMBO FULL VIP",p:550000,img:"https://picsum.photos/seed/aim6/400"}
+];
+let cart=[];
+const grid=document.getElementById('grid');
+products.forEach(o=>{
+grid.innerHTML+=`<div class="card"><img src="${o.img}"><div style="font-weight:700;margin-top:6px">${o.n}</div><div class="price">${o.p.toLocaleString()}đ</div><button class="btn" onclick="add(${o.id})">Mua ngay</button></div>`;
+});
+function add(id){let f=cart.find(x=>x.id==id);if(f)f.q++;else{let p=products.find(x=>x.id==id);cart.push({...p,q:1})}upd();toggle();}
+function upd(){let h="",t=0;cart.forEach(x=>{t+=x.p*x.q;h+=`<div style="display:flex;justify-content:space-between;margin:6px 0"><span>${x.n} x${x.q}</span><b>${(x.p*x.q).toLocaleString()}đ</b></div>`});document.getElementById('items').innerHTML=h||"Trống";document.getElementById('total').innerText=t.toLocaleString()}
 function toggle(){document.getElementById('cart').classList.toggle('open');document.getElementById('bg').classList.toggle('open')}
-function copyTx(t){navigator.clipboard.writeText(t);alert("Đã copy: "+t)}
 function pay(){
 let nm=document.getElementById('name').value,ph=document.getElementById('phone').value;
-if(!nm||!ph||!cart.length){alert("Nhập tên, SĐT và thêm món");return}
-let total=cart.reduce((s,x)=>s+x.p*x.q,0); let order="ZEN"+Date.now().toString().slice(-6);
+if(!nm||!ph||!cart.length){alert("Nhập tên game + SĐT");return}
+let total=cart.reduce((s,x)=>s+x.p*x.q,0);
+let order="ZEN"+Date.now().toString().slice(-6);
+let BANK="MB"; let STK="0355417385"; let NAME="HOANG BAO NAM";
+let qr=`https://img.vietqr.io/image/${BANK}-${STK}-compact2.png?amount=${total}&addInfo=${order}&accountName=${encodeURIComponent(NAME)}`;
 document.getElementById('payBox').innerHTML=`
-<div style="border:2px solid #0068FF;border-radius:20px;padding:16px;margin-top:14px;text-align:center">
-<h3 style="color:#0068FF">💙 THANH TOÁN ZALOPAY</h3>
-<p>Mã đơn: <b>${order}</b></p>
-<img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=ZaloPay%20${total}%20${order}" style="width:240px;margin:12px auto;display:block">
-<div class=row><span>SĐT ZaloPay</span><b>0355417385 <span style="color:#0068FF" onclick="copyTx('0355417385')">[Copy]</span></b></div>
-<div class=row><span>Chủ TK</span><b>HOANG BAO NAM</b></div>
-<div class=row><span>Số tiền</span><b>${total.toLocaleString()}đ</b></div>
-<div class=row><span>Nội dung</span><b>${order} <span style="color:#0068FF" onclick="copyTx('${order}')">[Copy]</span></b></div>
-<p style="font-size:12px;margin-top:10px">Mở ZaloPay -> Quét mã -> Chuyển tiền ghi đúng nội dung</p>
-<a href="https://zalo.me/0355417385" style="display:block;background:#0068FF;color:#fff;padding:14px;border-radius:99px;text-decoration:none;margin-top:12px;font-weight:700">💬 CHAT ZALO 0355417385</a>
-<button class=btn style="background:#00c851;color:#fff;margin-top:10px" onclick="alert('Cảm ơn ${nm}! Hoàng Bảo Nam sẽ giao hàng!')">TÔI ĐÃ THANH TOÁN</button>
-</div>`;
-}
-</script>
-</body>
-</html>
+<div style="border:2px solid #0068FF;border-radius:16px;padding:12px;margin-top:12px;text-align:center">
+<b style="color:#0068FF">⚡ THANH TOÁN TỰ ĐỘNG ZALOPAY</b><br>
+Mã: <b>${order}</b> - <b>${total.toLocaleString()}đ</b>
+<img src="${qr}" style="width:260px;border-radius:12px;margin:10px auto;display:block">
+<p style="font-size:13px">Mở <b>ZaloPay</b> -> Quét QR này<br>Nội dung phải là <b style
