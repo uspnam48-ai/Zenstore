@@ -1,73 +1,46 @@
 <!DOCTYPE html>
-<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZEN STORE - Hoàng Bảo Nam</title>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZEN STORE - HOANG BAO NAM</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#0a0a0a;color:#fff;font-family:system-ui}
-header{position:sticky;top:0;background:#0b0b0b;border-bottom:1px solid #222;padding:12px 15px;z-index:10;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:900;color:#FFD700;font-size:20px}
-.grid{max-width:1100px;margin:15px auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px;padding:0 12px}
-.card{background:#151515;border:1px solid #222;border-radius:16px;padding:12px}
-.card img{width:100%;height:110px;object-fit:cover;border-radius:12px;background:#222}
-.card h3{font-size:14px;margin:8px 0;min-height:32px}
-.price{color:#FFD700;font-weight:800}
-.btn{width:100%;padding:10px;border:none;border-radius:10px;font-weight:700;cursor:pointer;margin-top:8px}
+*{box-sizing:border-box}
+body{margin:0;background:#0a0a0a;color:#fff;font-family:system-ui,Arial}
+header{position:sticky;top:0;z-index:10;background:#0f0f0f;border-bottom:1px solid #222;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.logo{color:#FFD700;font-weight:900;font-size:20px}
+.grid{max-width:1100px;margin:16px auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:0 12px}
+.card{background:#151515;border:1px solid #222;border-radius:16px;padding:10px}
+.card img{width:100%;height:100px;object-fit:contain;background:#111;border-radius:12px}
+.card h3{font-size:13px;margin:8px 0;min-height:32px;line-height:1.3}
+.price{color:#FFD700;font-weight:800;font-size:14px}
+.btn{width:100%;padding:10px;border-radius:10px;border:none;font-weight:700;cursor:pointer;margin-top:8px}
 .btn-gold{background:#FFD700;color:#000}
 .btn-out{background:#222;color:#FFD700;border:1px solid #333}
-.qrbox{background:#111;border:2px solid #FFD700;border-radius:18px;padding:12px;text-align:center}
-.qrbox img{width:250px;background:#fff;padding:10px;border-radius:14px;display:block;margin:10px auto}
-#modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;padding:15px;z-index:50}
-.modal-box{background:#1c1c1c;border-radius:20px;padding:18px;max-width:400px;width:100%;border:1px solid #333;max-height:90vh;overflow:auto}
-</style></head><body>
-<header><div class="logo">ZEN STORE</div><div style="font-size:13px">Zalo: <a href="https://zalo.me/0355417385" style="color:#FFD700">0355417385</a></div></header>
+.qrbox{background:#111;border:2px solid #FFD700;border-radius:16px;padding:12px;text-align:center}
+.qrbox img{width:240px;background:#fff;padding:8px;border-radius:12px;margin:8px auto;display:block}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;padding:15px;z-index:99}
+.modal-box{background:#1c1c1c;border-radius:18px;padding:16px;max-width:380px;width:100%;border:1px solid #333;max-height:90vh;overflow:auto}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">ZEN STORE</div>
+<div style="font-size:13px">Zalo: <a href="https://zalo.me/0355417385" style="color:#FFD700">0355417385</a></div>
+</header>
 
-<div style="max-width:1100px;margin:15px auto;padding:0 12px"><h2>🔥 Sản phẩm nổi bật</h2><p style="color:#aaa;font-size:13px">Thanh toán tự động bằng QR ZaloPay chính chủ HOANG BAO NAM</p></div>
+<div style="max-width:1100px;margin:14px auto;padding:0 12px">
+<h2 style="margin:8px 0">🔥 Sản phẩm nổi bật</h2>
+<p style="color:#aaa;font-size:13px;margin:0">Thanh toán tự động bằng QR ZaloPay chính chủ HOANG BAO NAM</p>
+</div>
 
 <div class="grid" id="products"></div>
 
-<div id="modal"><div class="modal-box">
-<h3>Thanh toán đơn hàng</h3>
-<p id="pname" style="color:#aaa"></p>
-<p id="orderId" style="font-size:13px"></p>
+<div id="modal">
+<div class="modal-box">
+<h3 style="margin:0 0 8px 0">Thanh toán đơn hàng</h3>
+<p id="pname" style="color:#ccc;font-size:13px"></p>
+<p id="orderId" style="color:#888;font-size:12px"></p>
 <div class="qrbox">
 <h3 style="color:#FFD700;margin:0">ZaloPay</h3>
-<img src="IMG_1732.jpeg" alt="QR">
-<p style="line-height:1.6;font-size:14px"><b>SĐT nhận:</b> 0355417385<br><b>Tên:</b> HOANG BAO NAM<br><b id="pprice"></b><br><b id="pcode"></b></p>
-</div>
-<button class="btn btn-gold" onclick="window.open('https://zalo.me/0355417385')">Mở ZaloPay</button>
-<button class="btn btn-out" onclick="copyInfo()">Sao chép thông tin</button>
-<button class="btn" style="background:#fff;color:#0068FF;margin-top:10px" onclick="paid()">Tôi đã thanh toán</button>
-<button class="btn btn-out" onclick="closeM()">Đóng</button>
-</div></div>
-
-<script>
-const products=[
-{name:"menu ẩn vv",price:150000,img:"https://i.imgur.com/8Km9tLL.png"},
-{name:"key PRX 1day",price:30000,img:"https://i.imgur.com/8Km9tLL.png"},
-{name:"key PRX 7day",price:60000,img:"https://i.imgur.com/8Km9tLL.png"},
-{name:"key PRX 1 tháng",price:100000,img:"https://i.imgur.com/8Km9tLL.png"},
-{name:"key PRX VV",price:250000,img:"https://i.imgur.com/8Km9tLL.png"},
-{name:"aim ios 1ob",price:150000,img:"https://i.imgur.com/QlRphfQ.png"},
-{name:"aim ios vv",price:350000,img:"https://i.imgur.com/QlRphfQ.png"},
-{name:"aim body adr vv",price:350000,img:"https://i.imgur.com/QlRphfQ.png"},
-{name:"app adr 1 tuần",price:100000,img:"https://i.imgur.com/8Km9tLL.png"},
-{name:"app adr 1 tháng",price:200000,img:"https://i.imgur.com/8Km9tLL.png"},
-];
-let cur=null;
-const grid=document.getElementById('products');
-products.forEach((p,i)=>{
-grid.innerHTML+=`<div class="card"><img src="${p.img}"><h3>${p.name}</h3><div class="price">${p.price.toLocaleString()}đ</div><button class="btn btn-gold" onclick="openPay(${i})">Mua ngay</button></div>`;
-});
-function openPay(i){
-cur=products[i];
-const code='ZEN'+Date.now().toString().slice(-8);
-document.getElementById('pname').innerText=cur.name;
-document.getElementById('pprice').innerText='Số tiền: '+cur.price.toLocaleString()+'đ';
-document.getElementById('pcode').innerText='Nội dung: '+code;
-document.getElementById('orderId').innerText='Mã đơn: '+code;
-document.getElementById('modal').style.display='flex';
-}
-function closeM(){document.getElementById('modal').style.display='none'}
-function copyInfo(){navigator.clipboard.writeText('0355417385 - HOANG BAO NAM - '+cur.price+' - '+document.getElementById('pcode').innerText);alert('Đã sao chép!');}
-function paid(){alert('Đã ghi nhận thanh toán! Vui lòng nhắn Zalo 0355417385 kèm mã đơn để nhận hàng!');window.open('https://zalo.me/0355417385');closeM();}
-</script>
-</body></html>
+<img src="IMG_1732
