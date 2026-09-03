@@ -1,1 +1,212 @@
-<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ZEN STORE - AIM SHOP</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}body{background:#000;color:#fff}header{background:#111;padding:15px;text-align:center;color:#FFCC00;font-weight:900;border-bottom:2px solid #FFCC00}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}.card{background:#1a1a1a;border-radius:14px;padding:12px;text-align:center;border:1px solid #333}.price{color:#FFCC00;font-weight:900;margin:6px 0}.btn{width:100%;background:#FFCC00;color:#000;border:none;padding:10px;border-radius:99px;font-weight:900}.cart{position:fixed;bottom:0;left:0;right:0;background:#fff;color:#000;border-radius:20px 20px 0 0;padding:16px;transform:translateY(110%);transition:.3s;z-index:99}.cart.open{transform:translateY(0)}.bg{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;z-index:98}.bg.open{display:block}</style></head><body><header>ZEN STORE - DIGITAL GAMING STORE<br><small style="color:#fff">ZALOPAY: 0355417385 - HOANG BAO NAM</small></header><div class="grid" id="grid"></div><div class="bg" id="bg" onclick="toggleCart()"></div><div class="cart" id="cartBox"><h3>Gio hang</h3><div id="items">Trong</div><h3 style="margin-top:10px">Tong: <span id="total">0</span>d</h3><input id="uid" placeholder="Nhap UID Game" style="width:100%;padding:11px;border-radius:10px;border:1px solid #ccc;margin-top:8px"><input id="sdt" placeholder="SDT Zalo" style="width:100%;padding:11px;border-radius:10px;border:1px solid #ccc;margin-top:6px"><button class="btn" style="background:#0068FF;color:#fff;margin-top:10px" onclick="createPay()">TAO QR ZALOPAY TU DONG</button><div id="payArea"></div></div><button onclick="toggleCart()" style="position:fixed;bottom:20px;right:20px;width:62px;height:62px;border-radius:50%;background:#FFCC00;border:none;font-size:28px;z-index:97">🛒</button><script>const products=[{id:0,name:"MENU AN VIP",price:150000},{id:1,name:"KEY PRX 1 NGAY",price:30000},{id:2,name:"KEY PRX 7 NGAY",price:150000},{id:3,name:"KEY PRX 30 NGAY",price:400000},{id:4,name:"AIMBOT + ANTIBAN",price:250000},{id:5,name:"COMBO FULL VIP",price:550000}];let cart=[];const grid=document.getElementById('grid');products.forEach(p=>{grid.innerHTML+=`<div class="card"><div style="font-size:48px">🎯</div><div style="font-weight:800;margin-top:6px">${p.name}</div><div class="price">${p.price.toLocaleString()}d</div><button class="btn" onclick="addToCart(${p.id})">Mua ngay</button></div>`});function addToCart(id){let f=cart.find(x=>x.id===id);if(f)f.qty++;else{let pr=products.find(x=>x.id===id);cart.push({...pr,qty:1})}updateCart();toggleCart()}function updateCart(){let html="",sum=0;cart.forEach(c=>{sum+=c.price*c.qty;html+=`<div style="display:flex;justify-content:space-between;margin:6px 0"><span>${c.name} x${c.qty}</span><b>${(c.price*c.qty).toLocaleString()}d</b></div>`});document.getElementById('items').innerHTML=html||"Trong";document.getElementById('total').innerText=sum.toLocaleString()}function toggleCart(){document.getElementById('cartBox').classList.toggle('open');document.getElementById('bg').classList.toggle('open')}function createPay(){let uid=document.getElementById('uid').value;let sdt=document.getElementById('sdt').value;if(!uid||!sdt||!cart.length){alert("Nhap UID + SDT va chon mon");return}let total=0;cart.forEach(c=>total+=c.price*c.qty);let orderCode="ZEN"+Date.now().toString().slice(-6);let qrUrl="https://img.vietqr.io/image/MB-0355417385-compact2.png?amount="+total+"&addInfo="+orderCode+"&accountName=HOANG%20BAO%20NAM";document.getElementById('payArea').innerHTML=`<div style="border:2px solid #0068FF;border-radius:14px;padding:12px;margin-top:12px;text-align:center"><b style="color:#0068FF">THANH TOAN TU DONG</b><br>Ma don: <b style="color:red">${orderCode}</b> - ${total.toLocaleString()}d<br><img src="${qrUrl}" style="width:260px;border-radius:12px;margin:10px auto;display:block"><div style="background:#FFF3CD;padding:8px;border-radius:8px;font-size:13px">Mo ZaloPay -> Quet QR nay<br>Noi dung CK phai la <b style="color:red">${orderCode}</b></div><a href="https://zalo.me/0355417385" target="_blank" style="display:block;background:#000;color:#fff;padding:12px;border-radius:99px;text-decoration:none;margin-top:10px;text-align:center;font-weight:800">Chat Zalo 0355417385 lay Key</a></div>`}</script></body></html>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zen Store</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#070707;color:#fff;font-family:Arial,sans-serif}
+header{position:sticky;top:0;background:#0b0b0bee;border-bottom:1px solid #292929;backdrop-filter:blur(12px);z-index:5}
+nav{max-width:1050px;margin:auto;padding:17px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:20px;font-weight:900;letter-spacing:1px}.logo b{color:#ffd21c}
+nav a{color:#ddd;text-decoration:none;margin-left:18px;font-size:14px}
+nav a:hover{color:#ffd21c}
+.hero{max-width:1050px;margin:auto;padding:75px 20px 50px;text-align:center}
+.tag{display:inline-block;border:1px solid #6b5900;background:#171300;color:#ffd21c;padding:7px 12px;border-radius:99px;font-size:12px;font-weight:bold}
+h1{font-size:clamp(45px,8vw,78px);line-height:.95;margin:20px 0 15px;letter-spacing:-3px}
+h1 span{color:#ffd21c}.hero p{color:#aaa;line-height:1.7;max-width:650px;margin:auto}
+.btn{display:inline-block;background:#ffd21c;color:#111;text-decoration:none;font-weight:900;padding:14px 20px;border-radius:12px;margin-top:25px}
+.wrap{max-width:1050px;margin:auto;padding:20px}
+h2{margin:30px 0 16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card{background:#111;border:1px solid #292929;border-radius:18px;padding:20px;transition:.2s}
+.card:hover{transform:translateY(-3px);border-color:#806900}
+.card h3{margin:0 0 9px}.desc{color:#999;font-size:13px;min-height:38px}.price{color:#ffd21c;font-size:22px;font-weight:900;margin:15px 0}
+.buy{width:100%;border:0;border-radius:10px;padding:11px;background:#ffd21c;color:#111;font-weight:900;cursor:pointer}
+.topup{margin:40px 0;background:linear-gradient(145deg,#151515,#0d0d0d);border:1px solid #393000;border-radius:20px;padding:25px}
+.topup p{color:#aaa}.box{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input,select{width:100%;padding:13px;border-radius:10px;border:1px solid #333;background:#090909;color:#fff}
+.notice{font-size:12px;color:#888;margin-top:13px;line-height:1.6}
+footer{text-align:center;color:#777;border-top:1px solid #222;padding:30px 20px;margin-top:45px}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:20;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}.modalbox{background:#111;border:1px solid #444;border-radius:18px;padding:25px;max-width:460px;width:100%;max-height:90vh;overflow:auto}
+.close{float:right;background:none;border:0;color:#aaa;font-size:22px;cursor:pointer}
+@media(max-width:600px){.navlinks{display:none}.box{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><nav><div class="logo">ZEN <b>STORE</b></div><div class="navlinks"><a href="#products">Sản phẩm</a><a href="#support">Hỗ trợ</a></div></nav></header>
+
+<section class="hero">
+<span class="tag">DIGITAL GAMING STORE</span>
+<h1><span>ZEN</span><br>STORE</h1>
+<p>Website bán sản phẩm kỹ thuật số với giao diện Black × Gold. Chọn sản phẩm, xem giá và gửi yêu cầu thanh toán trực tiếp.</p>
+<a class="btn" href="#products">XEM SẢN PHẨM</a>
+</section>
+
+<main class="wrap">
+<section id="products">
+<h2>Sản phẩm</h2>
+<div class="grid">
+<div class="card"><h3>Menu ẩn</h3><div class="desc">Gói kỹ thuật số</div><div class="price">150k / VV</div><button class="buy" onclick="order('Menu ẩn','150k / VV')">Mua ngay</button></div>
+<div class="card"><h3>Key PRX</h3><div class="desc">Lựa chọn thời hạn</div><div class="price">30k / 1 ngày</div><button class="buy" onclick="order('Key PRX','30k / 1 ngày')">Mua ngay</button></div>
+<div class="card"><h3>Key PRX</h3><div class="desc">Lựa chọn thời hạn</div><div class="price">60k / 1 tuần</div><button class="buy" onclick="order('Key PRX','60k / 1 tuần')">Mua ngay</button></div>
+<div class="card"><h3>Key PRX</h3><div class="desc">Lựa chọn thời hạn</div><div class="price">100k / 1 tháng</div><button class="buy" onclick="order('Key PRX','100k / 1 tháng')">Mua ngay</button></div>
+<div class="card"><h3>Key PRX</h3><div class="desc">Lựa chọn thời hạn</div><div class="price">250k / VV</div><button class="buy" onclick="order('Key PRX','250k / VV')">Mua ngay</button></div>
+<div class="card"><h3>App ADR</h3><div class="desc">Gói kỹ thuật số</div><div class="price">100k / 1 tuần</div><button class="buy" onclick="order('App ADR','100k / 1 tuần')">Mua ngay</button></div>
+<div class="card"><h3>App ADR</h3><div class="desc">Gói kỹ thuật số</div><div class="price">200k / 1 tháng</div><button class="buy" onclick="order('App ADR','200k / 1 tháng')">Mua ngay</button></div>
+<div class="card"><h3>Aim iOS</h3><div class="desc">Gói kỹ thuật số</div><div class="price">150k / 1 OB</div><button class="buy" onclick="order('Aim iOS','150k / 1 OB')">Mua ngay</button></div>
+<div class="card"><h3>Aim iOS</h3><div class="desc">Gói kỹ thuật số</div><div class="price">300k / VV</div><button class="buy" onclick="order('Aim iOS','300k / VV')">Mua ngay</button></div>
+<div class="card"><h3>Aim Body ADR</h3><div class="desc">Gói kỹ thuật số</div><div class="price">350k / VV</div><button class="buy" onclick="order('Aim Body ADR','350k / VV')">Mua ngay</button></div>
+</div>
+</section>
+
+
+
+<section id="support"><h2>Hỗ trợ</h2><p style="color:#aaa">Liên hệ quản trị viên để xác nhận đơn hàng và thanh toán.</p></section>
+</main>
+
+<footer>© 2026 Zen Store — Black × Gold</footer>
+
+<div class="modal" id="modal"><div class="modalbox"><button class="close" onclick="closeM()">×</button><h2 id="mt"></h2><p id="md" style="color:#aaa"></p><p style="color:#ffd21c;font-weight:bold">Vui lòng liên hệ quản trị viên để hoàn tất đơn.</p><button class="btn" onclick="closeM()">Đóng</button></div></div>
+
+<script>
+// ===== CẤU HÌNH THANH TOÁN =====
+// Điền thông tin tài khoản nhận tiền của bạn ở đây.
+// BANK_ID: mã ngân hàng VietQR, ví dụ VCB, MB, ACB...
+const PAYMENT = {
+  BANK_ID: 'YOUR_BANK_ID',
+  ACCOUNT_NO: 'YOUR_ACCOUNT_NUMBER',
+  ACCOUNT_NAME: 'HOANG BAO NAM',
+  VERIFY_API: '/api/payment/status' // Backend/webhook của bạn
+};
+
+let currentOrder = null;
+
+function order(name, priceText){
+  const price = parsePrice(priceText);
+  if(!price){
+    alert('Không đọc được giá sản phẩm.');
+    return;
+  }
+
+  const orderId = 'ZEN' + Date.now().toString().slice(-10);
+  currentOrder = {orderId, name, price, priceText};
+
+  document.getElementById('mt').textContent = 'Thanh toán đơn hàng';
+  document.getElementById('md').innerHTML = `
+    <b>${escapeHtml(name)}</b><br>
+    ${escapeHtml(priceText)}<br><br>
+    <b>Mã đơn:</b> ${orderId}<br>
+    <span id="payStatus">Đang tạo thông tin thanh toán...</span>
+    <div id="paymentArea"></div>
+  `;
+  document.getElementById('modal').classList.add('show');
+
+  createPayment();
+}
+
+function createPayment(){
+  const area = document.getElementById('paymentArea');
+
+  const phone = PAYMENT.PHONE;
+  const amount = Number(currentOrder.price).toLocaleString('vi-VN');
+  const info = currentOrder.orderId;
+
+  area.innerHTML = `
+    <div style="margin-top:15px">
+      <div style="padding:16px;border:1px solid #5b4b00;border-radius:12px;background:#171300">
+        <p style="margin:0 0 8px;color:#ffd21c;font-weight:900">ZaloPay</p>
+        <p style="margin:6px 0"><b>SĐT nhận:</b> ${phone}</p>
+        <p style="margin:6px 0"><b>Tên:</b> ${escapeHtml(PAYMENT.ACCOUNT_NAME)}</p>
+        <p style="margin:6px 0"><b>Số tiền:</b> ${amount}đ</p>
+        <p style="margin:6px 0"><b>Nội dung:</b> ${info}</p>
+      </div>
+
+      <button class="buy" style="margin-top:12px" onclick="openZaloPay()">
+        Mở ZaloPay
+      </button>
+
+      <button class="buy" style="margin-top:8px;background:#222;color:#ffd21c;border:1px solid #5b4b00"
+              onclick="copyPaymentInfo()">
+        Sao chép thông tin thanh toán
+      </button>
+
+      <button class="buy" style="margin-top:8px" onclick="checkPayment()">
+        Tôi đã thanh toán
+      </button>
+
+      <p id="verifyResult" style="font-size:12px;color:#888;margin-top:10px">
+        Sau khi chuyển khoản, bấm “Tôi đã thanh toán” để hệ thống kiểm tra.
+      </p>
+    </div>`;
+
+  document.getElementById('payStatus').textContent = 'Thanh toán qua ZaloPay';
+}
+
+function openZaloPay(){
+  // Mở ứng dụng ZaloPay nếu thiết bị hỗ trợ deep-link; nếu không sẽ mở trang ZaloPay.
+  window.location.href = 'zalopay://';
+}
+
+async function copyPaymentInfo(){
+  const text = `ZaloPay: ${PAYMENT.PHONE}
+Tên: ${PAYMENT.ACCOUNT_NAME}
+Số tiền: ${Number(currentOrder.price).toLocaleString('vi-VN')}đ
+Nội dung: ${currentOrder.orderId}`;
+
+  try{
+    await navigator.clipboard.writeText(text);
+    alert('Đã sao chép thông tin thanh toán!');
+  }catch(e){
+    alert(text);
+  }
+}
+async function checkPayment(){
+  if(!currentOrder) return;
+  const result = document.getElementById('verifyResult');
+  result.textContent = 'Đang kiểm tra giao dịch...';
+
+  try{
+    const res = await fetch(PAYMENT.VERIFY_API, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        orderId: currentOrder.orderId,
+        amount: currentOrder.price
+      })
+    });
+
+    if(!res.ok) throw new Error('API error');
+    const data = await res.json();
+
+    if(data.paid === true){
+      result.textContent = '✅ Thanh toán thành công!';
+      result.style.color = '#7CFC00';
+    }else{
+      result.textContent = '⏳ Chưa thấy giao dịch. Nếu vừa chuyển khoản, chờ vài giây rồi kiểm tra lại.';
+    }
+  }catch(e){
+    result.textContent = '⚠️ Chưa kết nối được máy chủ xác nhận thanh toán.';
+  }
+}
+
+function parsePrice(s){
+  const m = String(s).match(/([\d.]+)\s*k/i);
+  return m ? Math.round(parseFloat(m[1].replace('.','')) * 1000) : 0;
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+  }[c]));
+}
+
+function topup(){
+  const a=document.getElementById('amount').value;
+  if(!a||a<=0){alert('Nhập số tiền hợp lệ');return}
+  alert('Hãy dùng chức năng mua hàng để tạo mã đơn và QR thanh toán.');
+}
+function closeM(){document.getElementById('modal').classList.remove('show')}
+</script>
+</body>
+</html>
