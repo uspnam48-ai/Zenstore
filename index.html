@@ -1,34 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZEN STORE</title>
-<style>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ZEN STORE PRO</title><style>
 body{margin:0;background:#000;color:#fff;font-family:Arial}
-header{background:#111;padding:10px;display:flex;justify-content:space-between}
+header{background:#111;padding:12px;display:flex;justify-content:space-between;border-bottom:1px solid #222}
 .logo{color:#FFD700;font-weight:900}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
-.card{background:#151515;border:1px solid #333;border-radius:10px;padding:10px;text-align:center}
-.price{color:#FFD700;font-weight:800}
-button{width:100%;padding:8px;background:#FFD700;border:0;border-radius:8px;font-weight:800;margin-top:6px}
-#m{position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;padding:15px}
-.b{background:#222;padding:15px;border-radius:12px;max-width:320px;width:100%;text-align:center}
-.b img{width:220px;background:#fff;padding:6px;border-radius:10px;margin:8px auto;display:block}
-</style>
-</head>
-<body>
-<header><div class="logo">ZEN STORE</div><div>0355417385</div></header>
-<h3 style="padding:10px">San pham noi bat</h3>
+.card{background:#151515;border:1px solid #333;border-radius:12px;padding:12px;text-align:center}
+.price{color:#FFD700;font-weight:800;margin:5px 0}
+.btn{width:100%;padding:9px;background:#FFD700;border:0;border-radius:8px;font-weight:900}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:9999;padding:15px}
+.box{background:#1e1e1e;padding:16px;border-radius:14px;max-width:340px;width:100%;text-align:center;border:2px solid #FFD700}
+.box img{width:230px;background:#fff;padding:8px;border-radius:12px;margin:10px auto;display:block}
+</style></head><body>
+<header><div class="logo">ZEN STORE</div><div style="color:#FFD700">0355417385</div></header>
+<h3 style="padding:0 12px">San pham noi bat</h3>
 <div class="grid">
-<div class="card">menu an vv<div class="price">150k</div><button onclick="pay('menu an vv',150000)">Mua</button></div>
-<div class="card">key PRX 1day<div class="price">30k</div><button onclick="pay('key PRX 1day',30000)">Mua</button></div>
-<div class="card">key PRX 7day<div class="price">60k</div><button onclick="pay('key PRX 7day',60000)">Mua</button></div>
-<div class="card">key PRX 1 thang<div class="price">100k</div><button onclick="pay('key PRX 1 thang',100000)">Mua</button></div>
-<div class="card">key PRX VV<div class="price">250k</div><button onclick="pay('key PRX VV',250000)">Mua</button></div>
-<div class="card">aim ios 1ob<div class="price">150k</div><button onclick="pay('aim ios 1ob',150000)">Mua</button></div>
-<div class="card">aim ios vv<div class="price">350k</div><button onclick="pay('aim ios vv',350000)">Mua</button></div>
-<div class="card">aim body adr vv<div class="price">350k</div><button onclick="pay('aim body adr vv',350000)">Mua</button></div>
-<div class="card">app adr 1 tuan<div class="price">100k</div><button onclick="pay('app adr 1 tuan',100000)">Mua</button></div>
-<div class="card">app adr 1 thang<div class="price">200k</div><button onclick="pay('app adr 1 thang',200000)">Mua</button></div>
+<div class="card">menu an vv<div class="price">150k</div><button class="btn" onclick="openPay('menu an vv',150000)">Mua</button></div>
+<div class="card">key PRX 1day<div class="price">30k</div><button class="btn" onclick="openPay('key PRX 1day',30000)">Mua</button></div>
+<div class="card">key PRX 7day<div class="price">60k</div><button class="btn" onclick="openPay('key PRX 7day',60000)">Mua</button></div>
+<div class="card">key PRX 1 thang<div class="price">100k</div><button class="btn" onclick="openPay('key PRX 1 thang',100000)">Mua</button></div>
+<div class="card">key PRX VV<div class="price">250k</div><button class="btn" onclick="openPay('key PRX VV',250000)">Mua</button></div>
+<div class="card">aim ios 1ob<div class="price">150k</div><button class="btn" onclick="openPay('aim ios 1ob',150000)">Mua</button></div>
+<div class="card">aim ios vv<div class="price">350k</div><button class="btn" onclick="openPay('aim ios vv',350000)">Mua</button></div>
+<div class="card">aim body adr vv<div class="price">350k</div><button class="btn" onclick="openPay('aim body adr vv',350000)">Mua</button></div>
+<div class="card">app adr 1 tuan<div class="price">100k</div><button class="btn" onclick="openPay('app adr 1 tuan',100000)">Mua</button></div>
+<div class="card">app adr 1 thang<div class="price">200k</div><button class="btn" onclick="openPay('app adr 1 thang',200000)">Mua</button></div>
 </div>
-<div id="m"><div class="b"><h3>Thanh toan</h3><p id="n"></p><img src="IMG_1732.jpeg"><p>SDT: 0355417385
+
+<div id="modal"><div class="box">
+<h3 style="margin:0;color:#FFD700">THANH TOAN</h3>
+<p id="pname" style="margin:8px 0"></p>
+<img src="IMG_1732.jpeg" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=0355417385'">
+<p style="font-size:13px;line-height:1.6">STK: 0355417385<br>Ten: HOANG BAO NAM<br><b id="pprice"></b><br><b id="pcode" style="color:#FFD700"></b></p>
+<button class="btn" onclick="window.open('https://zalo.me/0355417385')">Mo ZaloPay / Zalo</button>
+<button class="btn" style="background:#222;color:#fff;margin-top:8px" onclick="document.getElementById('modal').style.display='none'">Dong</button>
+</div></div>
+
+<script>
+function openPay(name,price){
+var code='ZEN'+Date.now().toString().slice(-6);
+document.getElementById('pname').innerText=name;
+document.getElementById('pprice').innerText='Tien: '+price.toLocaleString()+'d';
+document.getElementById('pcode').innerText='Noi dung: '+code;
+document.getElementById('modal').style.display='flex';
+}
+</script></body></html>
